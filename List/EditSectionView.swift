@@ -42,6 +42,9 @@ struct EditSectionView: View {
             Spacer()
         }
         .padding()
+        .onAppear {
+            self.title = self.section?.header ?? ""
+        }
     }
 }
 
