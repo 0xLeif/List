@@ -9,24 +9,37 @@
 import SwiftUI
 
 struct ItemDetailView: View {
+    @EnvironmentObject private var object: ListObject
+    var section: ListSection
     var item: ListItem
     
     @State private var isEditing = false
     
     var body: some View {
-            VStack(alignment: .leading) {
-                Text(item.title)
-                    .font(.largeTitle)
-                Text("\(item.subtitle)")
-                    .font(.title)
-            }
-            .frame(minWidth: 0,
-                   maxWidth: .infinity,
-                   minHeight: 0,
-                   maxHeight: .infinity,
-                   alignment: .topLeading)
+        VStack(alignment: .leading) {
+            Text(item.title)
+                .font(.largeTitle)
+            Text("\(item.subtitle)")
+                .font(.title)
+        }
+        .frame(minWidth: 0,
+               maxWidth: .infinity,
+               minHeight: 0,
+               maxHeight: .infinity,
+               alignment: .topLeading)
             .padding()
-    
+            .navigationBarItems(trailing: Button(action: {
+                self.isEditing.toggle()
+            }) {
+                Text(self.isEditing ? "Save" : "Edit")
+            })
+            .sheet(isPresented: $isEditing) {
+                EditItemView(isPresented: self.$isEditing,
+                             section: self.section,
+                             item: self.item)
+                    .environmentObject(self.object)
+                
+        }
     }
 }
 
