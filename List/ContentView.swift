@@ -42,7 +42,6 @@ struct ContentView: View {
                         ForEach(section.items) { item in
                             NavigationLink(destination:
                                 ItemDetailView(section: section, item: item)
-                                    .environmentObject(self.object)
                             ) {
                                 ListItemView(item: item)
                             }
